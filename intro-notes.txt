@@ -1,0 +1,69 @@
+Day 1:
+	1. Variables
+		var variableName = 123
+		var newString = "Hello"
+		//...
+
+	2. String and Integers: Can't reassign a string to an int
+
+	3. Multi-line strings:
+		var mlString = """
+		//....
+		"""
+
+	4. Can't operate on int and double together
+
+	5. String interpolation:
+		var city = "hanoi"
+		var message = "Welcome to \(city)"
+
+	6. Constant declaration
+		let constant = "CONSTANT"
+
+	7. Type inference vs. Type annotations
+		var percentage: Double = 99
+		var name: String
+		// You can then set assign values to name later 
+
+Day 2:
+	// Getting lazy gonna just read and add what is necessary
+	1. Arrays: 
+		var cities: [String] = ["London", "Paris", "New York"]
+		var readings: [Bool] = [false, false, true, false]
+
+	2. Sets:
+		- Contains only unique items
+		var readings = Set([true, false, true, true]) // will only have 2 values
+
+	3. Tuples: 
+		var tup = (1, 2, 3) // fixed values
+
+		var website = (name: "Apple", url: "www.apple.com")
+		website.name // gets name
+		website.apple
+		// Similar to python dictionary
+
+	4. Dictionary 
+		var roles = ["captain": "Mal", "engineer": "Kaylee"]
+		roles["captain"] // gets captain
+		
+		// Unlike tuples we can't be sure that a value inside exists
+		// Whenever you read a value from a dictionary, you might get a value or nil
+
+		// This gets history results from the dictionary, returns 0 if nil
+		let historyResult = results["history", default: 0] 
+
+		// Integers can be keys, don't mix up with other types tho
+		let planets = [1: "Mercury", 2: "Venus"]
+		let venus = planets[2, default: "Planet X"]
+
+	5. Enums
+		enum Weather: Int { // Adding raw values help read data and stuff
+			case sunny
+			case windy(speed: Int) // enums can have associated values
+			case rainy(chance: Int, amount: Int)
+		}
+
+
+
+
