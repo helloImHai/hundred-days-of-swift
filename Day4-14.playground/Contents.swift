@@ -109,6 +109,14 @@ travelClosure("Urmahderhous") {
 
 struct Person {
     var name: String
+    // static
+    static var population = 0
+    init(name: String) {
+        self.name = name
+        self.age = 0
+        Person.population += 1
+    }
+    
     var age: Int {
         // property observer
         didSet {
@@ -126,11 +134,44 @@ struct Person {
     }
 }
 // Note that only var person can set name changes
-var person1 = Person(name: "Bob", age: 17)
+var person1 = Person(name: "Bob")
 person1.setName(name: "Ann")
 person1.name
 person1.canDrink
 person1.age = 18
 person1.canDrink
 
+// DAY 10
 
+// Child class must always call super.init
+
+// Struct object on assignment make a copy of the old struct object,
+// class on the other points to the same place in memory
+struct A {
+    var name = "A"
+}
+var a = A()
+a.name
+var aa = a
+aa.name = "changed"
+a.name
+
+class B {
+    var name = "B"
+}
+var b = B()
+b.name
+var bb = b
+bb.name = "changed"
+b.name
+
+// Classes have deinit function rather than just init
+/*
+ The final difference between classes and structs is the way they deal with constants.
+ If you have a constant struct with a variable property, that property can’t be changed
+ because the struct itself is constant.
+ 
+ However, if you have a constant class object with a variable property, that property can be
+ changed. Because of this, classes don’t need the mutating keyword with methods that
+ change properties; that’s only needed with structs.
+ */
