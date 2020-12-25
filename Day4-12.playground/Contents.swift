@@ -127,8 +127,11 @@ struct Person {
     var age: Int {
         // property observer
         didSet {
+            print("old value: \(oldValue)") // didSet has a oldValue
             self.congratulate()
         }
+        
+        // willSet will have a value called newValue
     }
     var canDrink: Bool {
         return age >= 18
@@ -337,3 +340,4 @@ for pet in pets {
         dog.makeNoise()
     }
 }
+
