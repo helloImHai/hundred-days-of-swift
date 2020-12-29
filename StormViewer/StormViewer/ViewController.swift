@@ -1,0 +1,51 @@
+//
+//  ViewController.swift
+//  StormViewer
+//
+//  Created by Hai Nguyen on 30/12/20.
+//
+
+// This file uses UI tool kit
+import UIKit
+
+// Empty default screentype
+class ViewController: UITableViewController {
+    
+    var pictures = [String]()
+    
+    // We override to customise how we want
+    override func viewDidLoad() {
+        // Apple viewDidLoad first
+        super.viewDidLoad()
+        
+        // Declares constant fm system type to work with file system
+        let fm = FileManager.default
+        
+        // Declares path that is the bundle path
+        let path = Bundle.main.resourcePath! // Our bundle might not have a resource path, iOS has so safe
+        
+        // Declares items that is the content at that path
+        let items = try! fm.contentsOfDirectory(atPath: path) // If we can't read the bundle smt is super wrong
+        for item in items {
+            if item.hasPrefix("nssl") {
+                // this is a piture to load
+                pictures.append(item)
+            }
+        }
+        print(pictures)
+    }
+    
+    // This function is called by iOS, not by us
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return pictures.count
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Picture", for: indexPath)
+        cell.textLabel?.text = pictures[indexPath.row]
+        return cell
+    }
+
+
+}
+
