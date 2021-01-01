@@ -12,9 +12,12 @@ class ViewController: UIViewController {
     @IBOutlet var button2: UIButton!
     @IBOutlet var button3: UIButton!
     
+    let QUESTIONS_PER_GAME = 3
+    
     var countries = [String]()
     var score: Int = 0
     var correctAnswer = 0
+    var numberQuestionsAnswered = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,34 +51,46 @@ class ViewController: UIViewController {
         button1.setImage(UIImage(named: countries[0]), for: .normal)
         button2.setImage(UIImage(named: countries[1]), for: .normal)
         button3.setImage(UIImage(named: countries[2]), for: .normal)
-        
-        title = countries[correctAnswer].uppercased()
+
+        title = "\(countries[correctAnswer].uppercased()) - \(score)"
     }
     
     /*
      Connected to all 3 buttons
      */
     @IBAction func buttonTapped(_ sender: UIButton) {
-        // sender specifies which button
-        print("tapped")
+        numberQuestionsAnswered = (numberQuestionsAnswered + 1) % QUESTIONS_PER_GAME
         
+        // sender specifies which button
         var title: String
         if sender.tag == correctAnswer {
             title = "Correct"
             score += 1
         } else {
-            title = "Wrong"
+            title = "Wrong, you picked \(countries[sender.tag].uppercased())"
             score -= 1
         }
         
-        let ac = UIAlertController(title: title, message: "Your score is \(score)", preferredStyle: .alert)
-        // This throws an error because askQuestion must take in a parameter of UIAlertAction
-        ac.addAction(UIAlertAction(title: "Continue", style: .default, handler: askQuestion))
+        // Some reason this isn't allowed
+        let handler: (UIAlertAction) -> Void = numberQuestionsAnswered == 0 ? showFinalScreen : askQuestion
         
+        let ac = UIAlertController(title: title, message: "Your score is \(score)", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Continue", style: .default, handler: handler))
         present(ac, animated: true)
         
     }
     
-
+    func showFinalScreen(action: UIAlertAction? = nil) {
+        let ac = UIAlertController(title: "Good game", message: "Your final score is \(score)", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "New Game", style: .default, handler: resetGame))
+        present(ac, animated: true)
+    }
+    
+    func resetGame(action: UIAlertAction? = nil) {
+        score = 0
+        numberQuestionsAnswered = 0
+        askQuestion()
+    }
+    
 }
 
