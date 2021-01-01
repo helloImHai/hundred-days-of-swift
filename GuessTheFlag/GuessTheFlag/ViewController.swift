@@ -22,9 +22,24 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setUpShareButton()
+        
         countries += ["estonia", "france", "germany", "ireland", "italy", "monaco", "nigeria", "poland", "russia", "spain", "uk", "us"]
         setUpFlagUI()
         askQuestion()
+    }
+    
+    func setUpShareButton() {
+        // #selector(shareTapped) says that shareTapped will exist
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(shareTapped))
+    }
+    
+    @objc
+    func shareTapped() {
+        let vc = UIActivityViewController(activityItems: ["My score on Guess the flag is \(score)"], applicationActivities: [])
+        // This line is to let code run on ipad
+        vc.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+        present(vc, animated: true)
     }
     
     func setUpFlagUI() {
